@@ -4,7 +4,7 @@ const userRouter = require('./routers/user')
 const taskRouter = require('./routers/task')
 
 const jwt=require('jsonwebtoken')
-
+const bcrypt = require('bcryptjs')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -24,9 +24,9 @@ const port = process.env.PORT || 3000
 
 
 
-app.use((req,res,next)=>{
-	res.status(503).send('site is currently down check back soon')
-})
+// app.use((req,res,next)=>{
+// 	res.status(503).send('site is currently down check back soon')
+// })
 
 
 
@@ -38,14 +38,22 @@ app.listen(port, () => {
     console.log('Server is up on port ' + port)
 })
 
-const bcrypt = require('bcryptjs')
 
-const myfunction=async()=>{
-	const token=jwt.sign({_id:'abc123'},'thisismynewcourse',{expiresIn:'1 seconds'})
-	console.log(token)
 
-	const data=jwt.verify(token,'thisismynewcourse')
-	console.log(data)
+const Task=require('./models/task')
+const User =require('./models/user')
+
+
+const main =async()=>{
+	// const task = await Task.findById('5d063a19ba182512c005e46e')
+	// await task.populate('owner').execPopulate()
+	// console.log(task.owner)
+
+
+	const user = await User.findById('5d0639b2ba182512c005e46b')
+	await user.populate('tasks').execPopulate()
+	console.log(user.tasks)
 
 }
-myfunction()
+
+main()
