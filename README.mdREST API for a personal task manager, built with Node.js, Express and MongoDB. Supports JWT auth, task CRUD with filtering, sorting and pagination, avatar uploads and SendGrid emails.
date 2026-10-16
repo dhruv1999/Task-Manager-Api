@@ -1,0 +1,1 @@
+REST API for a personal task manager, built with Node.js, Express and MongoDB. Supports JWT auth, task CRUD with filtering, sorting and pagination, avatar uploads and SendGrid emails.
